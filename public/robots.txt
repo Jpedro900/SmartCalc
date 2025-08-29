@@ -1,0 +1,5 @@
+New-Item -ItemType Directory -Force public | Out-Null
+@"
+User-agent: *
+Disallow: /
+"@ | Out-File -Encoding UTF8 public/robots.txt
