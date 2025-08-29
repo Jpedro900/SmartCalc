@@ -1,0 +1,8 @@
+node_modules/
+.next/
+.out/
+.turbo/
+.DS_Store
+*.log
+.env*
+public/flags.zip
