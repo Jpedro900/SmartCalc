@@ -10,7 +10,6 @@ const API_FIAT = "https://api.exchangerate.host";
 const API_CG = "https://api.coingecko.com/api/v3";
 const API_FF = "https://api.frankfurter.app";
 
-/** Chips (6 mais populares) */
 const CHIPS: string[] = ["USD", "BRL", "EUR", "GBP", "JPY", "ARS"];
 
 const POPULAR_ALL: string[] = [
@@ -77,7 +76,6 @@ const CURRENCY_META: Record<string, CurrencyInfo> = {
   ETH: { name: "Ethereum", flag: "🟪", country: "ETH" },
 };
 
-/** Símbolos monetários */
 const SYMBOL: Record<string, string> = {
   USD: "$", BRL: "R$", EUR: "€", GBP: "£", JPY: "¥", CNY: "¥",
   AUD: "A$", CAD: "C$", CHF: "Fr.", ARS: "$", MXN: "$", CLP: "$",
@@ -148,7 +146,7 @@ async function fetchRate(
     return { rate: 1, date: new Date().toISOString().slice(0, 10), provider: "static" };
   }
 
-  // ===== FIAT ↔ FIAT =====
+  // FIAT ↔ FIAT
   if (!isCrypto(base) && !isCrypto(quote)) {
     try {
       const j = await fetchJSON(`${API_FIAT}/convert?from=${base}&to=${quote}&amount=1`);
@@ -189,7 +187,7 @@ async function fetchRate(
     return { rate: NaN, date: "", provider: "none" };
   }
 
-  // ===== PARES COM CRIPTO (CoinGecko) =====
+  // Pares com cripto (CoinGecko)
   if (isCrypto(base) && !isCrypto(quote)) {
     const id = cgIdFor(base);
     const vs = quote.toLowerCase();
@@ -224,6 +222,42 @@ async function fetchRate(
 }
 
 /* ================== UI ================== */
+
+type FlagImageProps = { code: string };
+
+function FlagImage({ code }: FlagImageProps) {
+  const meta = CURRENCY_META[code] ?? { country: code, flag: "🏳️", name: code };
+  const [broken, setBroken] = useState(false);
+
+  if (code === "BTC") {
+    return (
+      <span className="relative inline-block h-5 w-5">
+        <Image src="/bitcoin-logo.png" alt="Bitcoin" fill className="object-contain" />
+      </span>
+    );
+  }
+
+  if (code === "ETH") {
+    return (
+      <span className="relative inline-block h-5 w-5">
+        <Image src="/Ethereum-Logo.png" alt="Ethereum" fill className="object-contain" />
+      </span>
+    );
+  }
+
+  const src = `/flags/${meta.country.toLowerCase()}.svg`;
+  return broken ? (
+    <span aria-hidden className="text-lg leading-none">{meta.flag}</span>
+  ) : (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt={meta.country}
+      className="h-5 w-5 rounded-sm object-cover"
+      onError={() => setBroken(true)}
+    />
+  );
+}
 
 export default function MoedasClient() {
   const [base, setBase] = useState("USD");
@@ -332,7 +366,6 @@ export default function MoedasClient() {
         taxa de mercado e <b>Turístico</b> para simular IOF e spread.
       </p>
 
-      {/* Controles de modo */}
       <div className="mt-4 flex flex-wrap items-center gap-3">
         <div className="inline-flex rounded-lg bg-slate-100 p-1">
           <button
@@ -359,9 +392,7 @@ export default function MoedasClient() {
               <span>Método</span>
               <select
                 value={method}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                  setMethod(e.target.value as Method)
-                }
+                onChange={(e) => setMethod(e.target.value as Method)}
                 className="rounded-md border border-slate-200 bg-white px-2 py-1"
               >
                 <option value="dinheiro">Dinheiro</option>
@@ -393,7 +424,6 @@ export default function MoedasClient() {
           </>
         )}
 
-        {/* Botão de converter */}
         <button
           onClick={convertNow}
           disabled={converting}
@@ -404,7 +434,6 @@ export default function MoedasClient() {
         </button>
       </div>
 
-      {/* Caixas principais */}
       <section className="mt-4 grid gap-4 md:grid-cols-[1fr_auto_1fr]">
         <CurrencyBox
           titleLeft
@@ -432,7 +461,6 @@ export default function MoedasClient() {
         />
       </section>
 
-      {/* Rodapé de taxa/erro */}
       <div className="mt-4 text-sm text-slate-600">
         {error ? (
           <span className="text-rose-600">{error}</span>
@@ -459,43 +487,6 @@ export default function MoedasClient() {
 
 /* =============== Subcomponentes =============== */
 
-function Flag({ code }: { code: string }) {
-  const meta = CURRENCY_META[code] ?? { flag: "🏳️", country: code, name: code };
-  const isBtc = code === "BTC";
-  const isEth = code === "ETH";
-
-  if (isBtc) {
-    return (
-      <span className="relative inline-block h-5 w-5">
-        <Image src="/bitcoin-logo.png" alt="Bitcoin" fill className="object-contain" />
-      </span>
-    );
-  }
-  if (isEth) {
-    return (
-      <span className="relative inline-block h-5 w-5">
-        <Image src="/Ethereum-Logo.png" alt="Ethereum" fill className="object-contain" />
-      </span>
-    );
-  }
-
-  // usa SVG do /public/flags; se não existir, mostra emoji
-  const src = `/flags/${meta.country.toLowerCase()}.svg`;
-  const [broken, setBroken] = useState(false);
-  return broken ? (
-    <span aria-hidden className="text-lg leading-none">{meta.flag}</span>
-  ) : (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={src}
-      alt={meta.country}
-      className="h-5 w-5 rounded-sm object-cover"
-      onError={() => setBroken(true)}
-    />
-  );
-}
-
-/** Dropdown simples com bandeiras */
 function FlagSelect({
   value,
   onChange,
@@ -521,14 +512,13 @@ function FlagSelect({
 
   return (
     <div ref={ref} className="relative w-full">
-      {/* Botão (mostra bandeira e rótulo) */}
       <button
         type="button"
         className="cursor-pointer flex w-full items-center justify-between rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm"
         onClick={() => setOpen((v) => !v)}
       >
         <span className="flex items-center gap-2">
-          <Flag code={value} />
+          <FlagImage code={value} />
           <span className="font-medium">
             {meta.country} <span className="text-slate-400">({value} {meta.name})</span>
           </span>
@@ -538,7 +528,6 @@ function FlagSelect({
         </svg>
       </button>
 
-      {/* Lista */}
       {open && (
         <div className="absolute z-50 mt-1 max-h-72 w-full overflow-auto rounded-lg border border-slate-200 bg-white shadow-lg">
           {options.map((c) => {
@@ -555,7 +544,7 @@ function FlagSelect({
                   c === value ? "bg-slate-50" : ""
                 }`}
               >
-                <Flag code={c} />
+                <FlagImage code={c} />
                 <span className="font-medium">
                   {m.country} <span className="text-slate-400">({c} {m.name})</span>
                 </span>
@@ -582,12 +571,10 @@ function CurrencyBox(props: {
 
   return (
     <div className="rounded-xl border border-slate-200 bg-white p-3">
-      {/* Cabeçalho: seletor customizado com bandeira */}
       <div className="flex items-center gap-2">
         <FlagSelect value={code} onChange={onCodeChange} options={symbols} />
       </div>
 
-      {/* Input com símbolo à esquerda */}
       <div className="mt-3 flex items-center gap-2">
         <span className="min-w-[3ch] text-lg text-slate-500">{SYMBOL[code] ?? code}</span>
         <input
@@ -599,7 +586,6 @@ function CurrencyBox(props: {
         />
       </div>
 
-      {/* Chips (6) */}
       <div className="mt-2 flex flex-wrap gap-2 text-xs">
         {chips.map((c) => {
           const m = CURRENCY_META[c] ?? { name: c, flag: "🏳️", country: c };
@@ -613,7 +599,7 @@ function CurrencyBox(props: {
               type="button"
               title={`${m.country} (${c} ${m.name})`}
             >
-              <span className="mr-1 align-middle inline-flex"><Flag code={c} /></span>
+              <span className="mr-1 inline-flex align-middle"><FlagImage code={c} /></span>
               {c}
             </button>
           );
