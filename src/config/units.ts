@@ -1,0 +1,313 @@
+// src/config/units.ts
+// Catálogo de categorias e unidades. Cada unidade tem toSI/fromSI.
+// Para a maioria: toSI = v * k; fromSI = v / k.
+// Para temperatura (afim), usamos funções específicas.
+
+export type Unit = {
+  id: string;
+  label: string;
+  symbol?: string;
+  toSI: (v: number) => number;
+  fromSI: (v: number) => number;
+};
+
+export type Category = {
+  id: string;
+  name: string;
+  kind: "factor" | "affine";
+  units: Unit[];
+  chips?: string[];
+};
+
+const k = (factor: number): Unit["toSI"] => (v) => v * factor;
+const invk = (factor: number): Unit["fromSI"] => (v) => v / factor;
+
+export const UNITS: Category[] = [
+  {
+    id: "aceleracao",
+    name: "Aceleração",
+    kind: "factor",
+    units: [
+      { id: "m_s2", label: "metro por segundo ao quadrado", symbol: "m/s²", toSI: k(1), fromSI: invk(1) },
+      { id: "g", label: "gravidade (g)", symbol: "g", toSI: k(9.80665), fromSI: invk(9.80665) },
+      { id: "ft_s2", label: "pé por segundo ao quadrado", symbol: "ft/s²", toSI: k(0.3048), fromSI: invk(0.3048) },
+      { id: "km_h_s", label: "km/h por segundo", symbol: "km/h·s", toSI: k(1000/3600), fromSI: invk(1000/3600) },
+    ],
+    chips: ["m_s2", "g", "ft_s2"]
+  },
+  {
+    id: "area",
+    name: "Área",
+    kind: "factor",
+    units: [
+      { id: "m2", label: "metro quadrado", symbol: "m²", toSI: k(1), fromSI: invk(1) },
+      { id: "cm2", label: "centímetro quadrado", symbol: "cm²", toSI: k(1e-4), fromSI: invk(1e-4) },
+      { id: "mm2", label: "milímetro quadrado", symbol: "mm²", toSI: k(1e-6), fromSI: invk(1e-6) },
+      { id: "km2", label: "quilômetro quadrado", symbol: "km²", toSI: k(1e6), fromSI: invk(1e6) },
+      { id: "ha",  label: "hectare", symbol: "ha", toSI: k(10000), fromSI: invk(10000) },
+      { id: "acre", label: "acre (int.)", symbol: "ac", toSI: k(4046.8564224), fromSI: invk(4046.8564224) },
+      { id: "ft2", label: "pé quadrado", symbol: "ft²", toSI: k(0.09290304), fromSI: invk(0.09290304) },
+      { id: "in2", label: "polegada quadrada", symbol: "in²", toSI: k(0.00064516), fromSI: invk(0.00064516) },
+      { id: "yd2", label: "jarda quadrada", symbol: "yd²", toSI: k(0.83612736), fromSI: invk(0.83612736) },
+    ],
+    chips: ["m2", "cm2", "ft2", "acre", "ha"]
+  },
+  {
+    id: "torque",
+    name: "Torque",
+    kind: "factor",
+    units: [
+      { id: "N_m", label: "newton metro", symbol: "N·m", toSI: k(1), fromSI: invk(1) },
+      { id: "lbf_ft", label: "libra-força pé", symbol: "lbf·ft", toSI: k(1.3558179483314), fromSI: invk(1.3558179483314) },
+      { id: "lbf_in", label: "libra-força polegada", symbol: "lbf·in", toSI: k(0.112984829028), fromSI: invk(0.112984829028) },
+      { id: "N_cm", label: "newton centímetro", symbol: "N·cm", toSI: k(0.01), fromSI: invk(0.01) },
+      { id: "kgf_m", label: "quilograma-força metro", symbol: "kgf·m", toSI: k(9.80665), fromSI: invk(9.80665) },
+    ],
+    chips: ["N_m", "lbf_ft", "lbf_in"]
+  },
+  {
+    id: "carga",
+    name: "Carga elétrica",
+    kind: "factor",
+    units: [
+      { id: "C", label: "coulomb", symbol: "C", toSI: k(1), fromSI: invk(1) },
+      { id: "Ah", label: "ampere-hora", symbol: "Ah", toSI: k(3600), fromSI: invk(3600) },
+      { id: "mAh", label: "miliampere-hora", symbol: "mAh", toSI: k(3.6), fromSI: invk(3.6) },
+      { id: "e", label: "carga do elétron", symbol: "e", toSI: k(1.602176634e-19), fromSI: invk(1.602176634e-19) },
+    ],
+    chips: ["C", "Ah", "mAh"]
+  },
+  {
+    id: "energia",
+    name: "Energia",
+    kind: "factor",
+    units: [
+      { id: "J", label: "joule", symbol: "J", toSI: k(1), fromSI: invk(1) },
+      { id: "kJ", label: "quilojoule", symbol: "kJ", toSI: k(1e3), fromSI: invk(1e3) },
+      { id: "cal", label: "caloria (term.)", symbol: "cal", toSI: k(4.184), fromSI: invk(4.184) },
+      { id: "kcal", label: "quilocaloria", symbol: "kcal", toSI: k(4184), fromSI: invk(4184) },
+      { id: "Wh", label: "watt-hora", symbol: "Wh", toSI: k(3600), fromSI: invk(3600) },
+      { id: "kWh", label: "quilowatt-hora", symbol: "kWh", toSI: k(3.6e6), fromSI: invk(3.6e6) },
+      { id: "BTU", label: "BTU (IT)", symbol: "BTU", toSI: k(1055.05585262), fromSI: invk(1055.05585262) },
+      { id: "eV", label: "elétron-volt", symbol: "eV", toSI: k(1.602176634e-19), fromSI: invk(1.602176634e-19) },
+    ],
+    chips: ["J", "kJ", "kcal", "kWh", "BTU"]
+  },
+  {
+    id: "forca",
+    name: "Força",
+    kind: "factor",
+    units: [
+      { id: "N", label: "newton", symbol: "N", toSI: k(1), fromSI: invk(1) },
+      { id: "kN", label: "quilo-newton", symbol: "kN", toSI: k(1000), fromSI: invk(1000) },
+      { id: "lbf", label: "libra-força", symbol: "lbf", toSI: k(4.4482216152605), fromSI: invk(4.4482216152605) },
+      { id: "kgf", label: "quilograma-força", symbol: "kgf", toSI: k(9.80665), fromSI: invk(9.80665) },
+      { id: "dyn", label: "dina", symbol: "dyn", toSI: k(1e-5), fromSI: invk(1e-5) },
+    ],
+    chips: ["N", "kN", "lbf", "kgf"]
+  },
+  {
+    id: "forca_comprimento",
+    name: "Força / comprimento",
+    kind: "factor",
+    units: [
+      { id: "N_m", label: "newton por metro", symbol: "N/m", toSI: k(1), fromSI: invk(1) },
+      { id: "N_mm", label: "newton por milímetro", symbol: "N/mm", toSI: k(1000), fromSI: invk(1000) },
+      { id: "kN_m", label: "kN por metro", symbol: "kN/m", toSI: k(1000), fromSI: invk(1000) },
+      { id: "lbf_in", label: "lbf por polegada", symbol: "lbf/in", toSI: k(175.126835), fromSI: invk(175.126835) },
+    ],
+    chips: ["N_m", "N_mm", "lbf_in"]
+  },
+  {
+    id: "comprimento",
+    name: "Comprimento",
+    kind: "factor",
+    units: [
+      { id: "m", label: "metro", symbol: "m", toSI: k(1), fromSI: invk(1) },
+      { id: "mm", label: "milímetro", symbol: "mm", toSI: k(1e-3), fromSI: invk(1e-3) },
+      { id: "cm", label: "centímetro", symbol: "cm", toSI: k(1e-2), fromSI: invk(1e-2) },
+      { id: "km", label: "quilômetro", symbol: "km", toSI: k(1e3), fromSI: invk(1e3) },
+      { id: "in", label: "polegada", symbol: "in", toSI: k(0.0254), fromSI: invk(0.0254) },
+      { id: "ft", label: "pé", symbol: "ft", toSI: k(0.3048), fromSI: invk(0.3048) },
+      { id: "yd", label: "jarda", symbol: "yd", toSI: k(0.9144), fromSI: invk(0.9144) },
+      { id: "mi", label: "milha", symbol: "mi", toSI: k(1609.344), fromSI: invk(1609.344) },
+      { id: "nm", label: "nanômetro", symbol: "nm", toSI: k(1e-9), fromSI: invk(1e-9) },
+    ],
+    chips: ["m", "cm", "km", "in", "ft", "mi"]
+  },
+  {
+    id: "iluminacao",
+    name: "Iluminação",
+    kind: "factor",
+    units: [
+      { id: "lux", label: "lux", symbol: "lx", toSI: k(1), fromSI: invk(1) },
+      { id: "fc", label: "foot-candle", symbol: "fc", toSI: k(10.76391041671), fromSI: invk(10.76391041671) },
+    ],
+    chips: ["lux", "fc"]
+  },
+  {
+    id: "massa",
+    name: "Massa",
+    kind: "factor",
+    units: [
+      { id: "kg", label: "quilograma", symbol: "kg", toSI: k(1), fromSI: invk(1) },
+      { id: "g", label: "grama", symbol: "g", toSI: k(1e-3), fromSI: invk(1e-3) },
+      { id: "mg", label: "miligramas", symbol: "mg", toSI: k(1e-6), fromSI: invk(1e-6) },
+      { id: "t", label: "tonelada métrica", symbol: "t", toSI: k(1000), fromSI: invk(1000) },
+      { id: "lb", label: "libra", symbol: "lb", toSI: k(0.45359237), fromSI: invk(0.45359237) },
+      { id: "oz", label: "onça", symbol: "oz", toSI: k(0.028349523125), fromSI: invk(0.028349523125) },
+    ],
+    chips: ["kg", "g", "lb", "oz", "t"]
+  },
+  {
+    id: "fluxo_massa",
+    name: "Fluxo (massa)",
+    kind: "factor",
+    units: [
+      { id: "kg_s", label: "kg/s", symbol: "kg/s", toSI: k(1), fromSI: invk(1) },
+      { id: "g_s", label: "g/s", symbol: "g/s", toSI: k(1e-3), fromSI: invk(1e-3) },
+      { id: "kg_h", label: "kg/h", symbol: "kg/h", toSI: k(1/3600), fromSI: invk(1/3600) },
+      { id: "t_h", label: "t/h", symbol: "t/h", toSI: k(1000/3600), fromSI: invk(1000/3600) },
+      { id: "lb_s", label: "lb/s", symbol: "lb/s", toSI: k(0.45359237), fromSI: invk(0.45359237) },
+      { id: "lb_min", label: "lb/min", symbol: "lb/min", toSI: k(0.45359237/60), fromSI: invk(0.45359237/60) },
+    ],
+    chips: ["kg_s", "kg_h", "lb_min"]
+  },
+  {
+    id: "densidade",
+    name: "Densidade",
+    kind: "factor",
+    units: [
+      { id: "kg_m3", label: "kg por m³", symbol: "kg/m³", toSI: k(1), fromSI: invk(1) },
+      { id: "g_cm3", label: "g por cm³", symbol: "g/cm³", toSI: k(1000), fromSI: invk(1000) },
+      { id: "lb_ft3", label: "lb por ft³", symbol: "lb/ft³", toSI: k(16.01846337), fromSI: invk(16.01846337) },
+    ],
+    chips: ["kg_m3", "g_cm3", "lb_ft3"]
+  },
+  {
+    id: "potencia",
+    name: "Potência",
+    kind: "factor",
+    units: [
+      { id: "W", label: "watt", symbol: "W", toSI: k(1), fromSI: invk(1) },
+      { id: "kW", label: "quilowatt", symbol: "kW", toSI: k(1000), fromSI: invk(1000) },
+      { id: "MW", label: "megawatt", symbol: "MW", toSI: k(1e6), fromSI: invk(1e6) },
+      { id: "hp", label: "cavalo-vapor (mec.)", symbol: "hp", toSI: k(745.6998715823), fromSI: invk(745.6998715823) },
+      { id: "BTU_h", label: "BTU por hora", symbol: "BTU/h", toSI: k(0.29307107), fromSI: invk(0.29307107) },
+    ],
+    chips: ["W", "kW", "hp"]
+  },
+  {
+    id: "pressao",
+    name: "Pressão e Tensão",
+    kind: "factor",
+    units: [
+      { id: "Pa", label: "pascal", symbol: "Pa", toSI: k(1), fromSI: invk(1) },
+      { id: "kPa", label: "quilo-pascal", symbol: "kPa", toSI: k(1000), fromSI: invk(1000) },
+      { id: "bar", label: "bar", symbol: "bar", toSI: k(1e5), fromSI: invk(1e5) },
+      { id: "atm", label: "atmosfera", symbol: "atm", toSI: k(101325), fromSI: invk(101325) },
+      { id: "psi", label: "psi", symbol: "psi", toSI: k(6894.757293168), fromSI: invk(6894.757293168) },
+      { id: "mmHg", label: "milímetros de Hg", symbol: "mmHg", toSI: k(133.3223684211), fromSI: invk(133.3223684211) },
+    ],
+    chips: ["Pa", "kPa", "bar", "psi"]
+  },
+  {
+    id: "temperatura",
+    name: "Temperatura",
+    kind: "affine",
+    units: [
+      {
+        id: "C", label: "graus Celsius", symbol: "°C",
+        toSI: (v) => v + 273.15,
+        fromSI: (v) => v - 273.15
+      },
+      {
+        id: "F", label: "graus Fahrenheit", symbol: "°F",
+        toSI: (v) => (v - 32) * 5/9 + 273.15,
+        fromSI: (v) => (v - 273.15) * 9/5 + 32
+      },
+      {
+        id: "K", label: "kelvin", symbol: "K",
+        toSI: k(1),
+        fromSI: invk(1)
+      },
+      {
+        id: "R", label: "Rankine", symbol: "°R",
+        toSI: (v) => v * 5/9,
+        fromSI: (v) => v * 9/5
+      },
+    ],
+    chips: ["C", "F", "K"]
+  },
+  {
+    id: "tempo",
+    name: "Tempo",
+    kind: "factor",
+    units: [
+      { id: "s", label: "segundo", symbol: "s", toSI: k(1), fromSI: invk(1) },
+      { id: "ms", label: "milissegundo", symbol: "ms", toSI: k(1e-3), fromSI: invk(1e-3) },
+      { id: "us", label: "microssegundo", symbol: "µs", toSI: k(1e-6), fromSI: invk(1e-6) },
+      { id: "min", label: "minuto", symbol: "min", toSI: k(60), fromSI: invk(60) },
+      { id: "h", label: "hora", symbol: "h", toSI: k(3600), fromSI: invk(3600) },
+      { id: "day", label: "dia", symbol: "d", toSI: k(86400), fromSI: invk(86400) },
+      { id: "week", label: "semana", symbol: "sem", toSI: k(604800), fromSI: invk(604800) },
+    ],
+    chips: ["s", "min", "h", "day"]
+  },
+  {
+    id: "velocidade",
+    name: "Velocidade",
+    kind: "factor",
+    units: [
+      { id: "m_s", label: "metro por segundo", symbol: "m/s", toSI: k(1), fromSI: invk(1) },
+      { id: "km_h", label: "quilômetro por hora", symbol: "km/h", toSI: k(1000/3600), fromSI: invk(1000/3600) },
+      { id: "mph", label: "milha por hora", symbol: "mph", toSI: k(1609.344/3600), fromSI: invk(1609.344/3600) },
+      { id: "ft_s", label: "pé por segundo", symbol: "ft/s", toSI: k(0.3048), fromSI: invk(0.3048) },
+      { id: "knot", label: "nó", symbol: "kn", toSI: k(1852/3600), fromSI: invk(1852/3600) },
+    ],
+    chips: ["m_s", "km_h", "mph", "knot"]
+  },
+  {
+    id: "viscosidade",
+    name: "Viscosidade (dinâmica)",
+    kind: "factor",
+    units: [
+      { id: "Pa_s", label: "pascal segundo", symbol: "Pa·s", toSI: k(1), fromSI: invk(1) },
+      { id: "P", label: "poise", symbol: "P", toSI: k(0.1), fromSI: invk(0.1) },
+      { id: "cP", label: "centipoise", symbol: "cP", toSI: k(0.001), fromSI: invk(0.001) },
+    ],
+    chips: ["Pa_s", "cP"]
+  },
+  {
+    id: "volume",
+    name: "Volume & Capacidade",
+    kind: "factor",
+    units: [
+      { id: "m3", label: "metro cúbico", symbol: "m³", toSI: k(1), fromSI: invk(1) },
+      { id: "L", label: "litro", symbol: "L", toSI: k(0.001), fromSI: invk(0.001) },
+      { id: "mL", label: "mililitro", symbol: "mL", toSI: k(1e-6), fromSI: invk(1e-6) },
+      { id: "cm3", label: "centímetro cúbico", symbol: "cm³", toSI: k(1e-6), fromSI: invk(1e-6) },
+      { id: "in3", label: "polegada cúbica", symbol: "in³", toSI: k(1.6387064e-5), fromSI: invk(1.6387064e-5) },
+      { id: "ft3", label: "pé cúbico", symbol: "ft³", toSI: k(0.028316846592), fromSI: invk(0.028316846592) },
+      { id: "galUS", label: "galão (US)", symbol: "gal (US)", toSI: k(0.003785411784), fromSI: invk(0.003785411784) },
+      { id: "qtUS", label: "quart (US)", symbol: "qt (US)", toSI: k(0.000946352946), fromSI: invk(0.000946352946) },
+      { id: "ptUS", label: "pint (US)", symbol: "pt (US)", toSI: k(0.000473176473), fromSI: invk(0.000473176473) },
+      { id: "cupUS", label: "xícara (US)", symbol: "cup (US)", toSI: k(0.0002365882365), fromSI: invk(0.0002365882365) },
+    ],
+    chips: ["L", "mL", "galUS", "ft3"]
+  },
+  {
+    id: "fluxo_volume",
+    name: "Fluxo (volume)",
+    kind: "factor",
+    units: [
+      { id: "m3_s", label: "m³/s", symbol: "m³/s", toSI: k(1), fromSI: invk(1) },
+      { id: "m3_h", label: "m³/h", symbol: "m³/h", toSI: k(1/3600), fromSI: invk(1/3600) },
+      { id: "L_s", label: "L/s", symbol: "L/s", toSI: k(0.001), fromSI: invk(0.001) },
+      { id: "L_min", label: "L/min", symbol: "L/min", toSI: k(0.001/60), fromSI: invk(0.001/60) },
+      { id: "ft3_s", label: "ft³/s", symbol: "ft³/s", toSI: k(0.028316846592), fromSI: invk(0.028316846592) },
+      { id: "gpmUS", label: "gal/min (US)", symbol: "gpm", toSI: k(0.003785411784/60), fromSI: invk(0.003785411784/60) },
+    ],
+    chips: ["m3_h", "L_min", "gpmUS"]
+  },
+];

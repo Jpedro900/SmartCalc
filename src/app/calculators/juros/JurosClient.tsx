@@ -40,10 +40,10 @@ function toMonths(value: number, unit: PeriodUnit) {
 
 export default function JurosClient() {
   const [initial, setInitial] = useState("0");
-  const [monthly, setMonthly] = useState("500");
-  const [rate, setRate] = useState("1"); // %
+  const [monthly, setMonthly] = useState("0");
+  const [rate, setRate] = useState("0"); // %
   const [ratePeriod, setRatePeriod] = useState<PeriodRate>("mensal");
-  const [durValue, setDurValue] = useState("240");
+  const [durValue, setDurValue] = useState("0");
   const [durUnit, setDurUnit] = useState<PeriodUnit>("meses");
 
   const [timing, setTiming] = useState<DepositTiming>("end");
