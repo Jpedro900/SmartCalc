@@ -29,6 +29,8 @@ export const TOOLS: Tool[] = [
   { href: "/calculators/juros",      title: "Juros Compostos",   desc: "Montante, taxa e aporte.",                category: "Financeiro",  icon: IconMoney, badge: "Novo" },
   { href: "/calculators/regra-de-3", title: "Regra de 3",        desc: "Proporção direta e inversa.",             category: "Matemática",  icon: IconMath,  badge: "Novo" },
   { href: "/calculators/moedas",     title: "Conversor de Moedas",desc: "Valor × cotação (manual).",              category: "Financeiro",  icon: IconMoney },
+  { href: "/calculators/financiamento", title: "Financiamento",   desc: "Tabela Price e SAC.",                      category: "Financeiro",  icon: IconMoney },
+  { href: "/calculators/combustivel", title: "Etanol × Gasolina",desc: "Compare preços e consumo para economizar.", category: "Financeiro", icon: IconMoney, badge: "Novo" },
   { href: "/calculators/unidades",   title: "Conversor de Unidades",desc: "Tempo, peso e distância.",             category: "Utilidades",  icon: IconTools },
   { href: "/calculators/area-volume",title: "Área & Volume",     desc: "Figuras básicas e sólidos.",              category: "Utilidades",  icon: IconTools },
   { href: "/calculators/idade",      title: "Idade",             desc: "Anos, meses e dias.",                     category: "Utilidades",  icon: IconTools },

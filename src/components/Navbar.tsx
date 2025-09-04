@@ -1,14 +1,12 @@
 import Link from "next/link";
+import Logo from "./Logo";
 
 export function Navbar() {
   return (
     <nav className="sticky top-0 z-10 border-b border-slate-200 bg-white/90 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2">
-          <span className="grid h-6 w-6 place-items-center rounded bg-blue-600 text-white text-xs font-bold">
-            S
-          </span>
-          <span className="text-sm font-semibold">SmartCalc</span>
+          <Logo size={28} />
         </Link>
         <div className="hidden gap-4 text-sm md:flex">
           <Link className="hover:underline" href="/#categorias">

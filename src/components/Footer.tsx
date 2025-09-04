@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { TOOLS } from "@/config/tools";
+import Logo from "./Logo";
 
 export function Footer() {
   const groups = Array.from(
@@ -17,10 +18,7 @@ export function Footer() {
           {/* bloco da marca */}
           <div>
             <div className="flex items-center gap-2">
-              <span className="grid h-7 w-7 place-items-center rounded bg-blue-600 text-white text-sm font-bold">
-                S
-              </span>
-              <span className="text-base font-semibold">SmartCalc</span>
+              <Logo size={50}/>
             </div>
             <p className="mt-3 text-sm text-slate-600">
               Calculadoras simples, rápidas e confiáveis.
