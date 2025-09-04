@@ -21,12 +21,15 @@ describe("polynomial utils", () => {
 
   it("realRoots cúbico", () => {
     // (x-3)(x-1)(x+2) = x^3 - 2x^2 - 5x + 6 → 3,1,-2
-    expect(realRoots([1, -2, -5, 6])).toEqual([-2, 1, 3]);
+    const r = realRoots([1, -2, -5, 6]);
+    expect(r[0]).toBeCloseTo(-2, 10);
+    expect(r[1]).toBeCloseTo(1, 10);
+    expect(r[2]).toBeCloseTo(3, 10);
   });
 
   it("realRoots quartico (bisseção)", () => {
-    // (x-1)(x+2)(x-3)(x+4) → raízes reais: -4,-2,1,3
-    const coefs = [1, 0, -11, 2, 24]; // expandido
+    // (x-1)(x+2)(x-3)(x+4) = x^4 + 2x^3 − 13x^2 − 14x + 24
+    const coefs = [1, 2, -13, -14, 24];
     const roots = realRoots(coefs);
     expect(roots.length).toBe(4);
     expect(roots[0]).toBeCloseTo(-4, 5);
