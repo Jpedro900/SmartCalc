@@ -136,8 +136,8 @@ export default function DividirContaClient() {
             <div className="mt-3 flex items-start gap-2 text-sm text-slate-600">
               <Info className="mt-0.5 h-4 w-4 text-slate-400" />
               <p>
-                Ao arredondar, ajustamos a última pessoa para que a soma feche exatamente o total com
-                gorjeta.
+                Ao arredondar, ajustamos a última pessoa para que a soma feche exatamente o total
+                com gorjeta.
               </p>
             </div>
           </div>

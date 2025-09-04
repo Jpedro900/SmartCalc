@@ -1,13 +1,6 @@
 "use client";
 
-import React, {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  MouseEvent,
-  useCallback,
-} from "react";
+import React, { useEffect, useMemo, useRef, useState, MouseEvent, useCallback } from "react";
 
 type Pt = { x: number; y: number };
 
@@ -17,17 +10,13 @@ type Props = {
   onArea?: (areaPx2: number, areaM2: number) => void;
 };
 
-export default function ShapeCanvas({
-  unitLabel,
-  cellLengthInMeters,
-  onArea,
-}: Props) {
+export default function ShapeCanvas({ unitLabel, cellLengthInMeters, onArea }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [pts, setPts] = useState<Pt[]>([]);
   const [closed, setClosed] = useState(false);
 
   const cell = 20;
-  const dpr = typeof window !== "undefined" ? window.devicePixelRatio ?? 1 : 1;
+  const dpr = typeof window !== "undefined" ? (window.devicePixelRatio ?? 1) : 1;
 
   const px2ToM2 = useMemo(() => {
     const pxToMeter = cellLengthInMeters / cell;
@@ -108,11 +97,7 @@ export default function ShapeCanvas({
     ctx.save();
     ctx.fillStyle = "#6b7280";
     ctx.font = `${12 * dpr}px system-ui, sans-serif`;
-    ctx.fillText(
-      `1 célula = ${cellLengthInMeters} ${unitLabel}`,
-      8 * dpr,
-      16 * dpr
-    );
+    ctx.fillText(`1 célula = ${cellLengthInMeters} ${unitLabel}`, 8 * dpr, 16 * dpr);
     ctx.restore();
   }, [pts, closed, dpr, cellLengthInMeters, unitLabel]);
 

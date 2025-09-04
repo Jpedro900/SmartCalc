@@ -10,14 +10,7 @@ import {
   TrendingDown,
   TrendingUp,
 } from "lucide-react";
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  Tooltip as RTooltip,
-  ResponsiveContainer,
-} from "recharts";
+import { AreaChart, Area, XAxis, YAxis, Tooltip as RTooltip, ResponsiveContainer } from "recharts";
 
 /* ========= helpers ========= */
 
@@ -214,7 +207,9 @@ export default function FinanciamentoClient() {
         </div>
         <div>
           <h1 className="text-xl font-semibold text-slate-900">Financiamento — Price & SAC</h1>
-          <p className="text-slate-500">Calcule prestações, juros totais e a tabela de amortização.</p>
+          <p className="text-slate-500">
+            Calcule prestações, juros totais e a tabela de amortização.
+          </p>
         </div>
       </div>
 
@@ -337,8 +332,24 @@ export default function FinanciamentoClient() {
         <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm md:col-span-3">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="text-sm text-slate-600">
-              Taxa efetiva: <strong>{out ? (out.iMes * 100).toLocaleString("pt-BR", { maximumFractionDigits: 4 }) : "—"}% a.m.</strong> •{" "}
-              <strong>{out ? (out.iAno * 100).toLocaleString("pt-BR", { maximumFractionDigits: 4 }) : "—"}% a.a.</strong>{" "}
+              Taxa efetiva:{" "}
+              <strong>
+                {out
+                  ? (out.iMes * 100).toLocaleString("pt-BR", {
+                      maximumFractionDigits: 4,
+                    })
+                  : "—"}
+                % a.m.
+              </strong>{" "}
+              •{" "}
+              <strong>
+                {out
+                  ? (out.iAno * 100).toLocaleString("pt-BR", {
+                      maximumFractionDigits: 4,
+                    })
+                  : "—"}
+                % a.a.
+              </strong>{" "}
               • Prazo: <strong>{out ? `${out.n} meses` : "—"}</strong>
             </div>
           </div>
@@ -357,11 +368,10 @@ export default function FinanciamentoClient() {
                   <XAxis dataKey="t" tickLine={false} axisLine={false} />
                   <YAxis tickLine={false} axisLine={false} />
                   <RTooltip
-                    formatter={(value: number | string, name: string) =>
-                        fmtMoneyBRL(Number(value))
-                    }
-                    labelFormatter={(label: number) => `Parcela ${label}`}
-                    />
+                    formatter={(v: number | string) => fmtMoneyBRL(Number(v))}
+                    labelFormatter={(l: number) => `Parcela ${l}`}
+                  />
+
                   <Area type="monotone" dataKey="saldo" stroke="#6366f1" fill="url(#g1)" />
                 </AreaChart>
               </ResponsiveContainer>
@@ -438,15 +448,7 @@ function Field({
   );
 }
 
-function Card({
-  title,
-  value,
-  icon,
-}: {
-  title: string;
-  value: string;
-  icon?: React.ReactNode;
-}) {
+function Card({ title, value, icon }: { title: string; value: string; icon?: React.ReactNode }) {
   return (
     <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
       <div className="mb-1 flex items-center justify-between">

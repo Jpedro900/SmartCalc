@@ -23,7 +23,11 @@ const BRL = new Intl.NumberFormat("pt-BR", {
 });
 
 function parseNum(s: string) {
-  const n = Number(String(s).replace(/[^\d,.-]/g, "").replace(",", "."));
+  const n = Number(
+    String(s)
+      .replace(/[^\d,.-]/g, "")
+      .replace(",", ".")
+  );
   return Number.isFinite(n) ? n : NaN;
 }
 
@@ -52,12 +56,7 @@ export default function JurosClient() {
   const [withdrawOn, setWithdrawOn] = useState(false);
   const [withdraw, setWithdraw] = useState("0");
 
-  const {
-    finalAmount,
-    investedTotal,
-    interestTotal,
-    rows,
-  } = useMemo(() => {
+  const { finalAmount, investedTotal, interestTotal, rows } = useMemo(() => {
     const P0 = parseNum(initial) || 0;
     const PMT = parseNum(monthly) || 0;
     const r = toMonthlyRate(parseNum(rate) || 0, ratePeriod, annualConv);
@@ -212,7 +211,7 @@ export default function JurosClient() {
           <div className="flex items-end gap-3">
             <button
               className="h-10 rounded-lg bg-indigo-600 px-4 text-sm font-semibold text-white hover:bg-indigo-700"
-              onClick={() => void 0 }
+              onClick={() => void 0}
             >
               Calcular
             </button>
@@ -262,7 +261,10 @@ export default function JurosClient() {
 
         <div className="mt-3 grid gap-4 sm:grid-cols-3">
           {cards.map((c) => (
-            <div key={c.label} className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-center">
+            <div
+              key={c.label}
+              className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-center"
+            >
               <div className="text-xs font-medium text-slate-600">{c.label}</div>
               <div className="mt-1 text-xl font-semibold text-slate-900">{c.value}</div>
             </div>

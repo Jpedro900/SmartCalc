@@ -1,15 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import {
-  Calendar,
-  Cake,
-  Hourglass,
-  Clock,
-  HeartPulse,
-  Rocket,
-  Info,
-} from "lucide-react";
+import { Calendar, Cake, Hourglass, Clock, HeartPulse, Rocket, Info } from "lucide-react";
 
 type AgeBreakdown = {
   years: number;
@@ -60,18 +52,20 @@ function westernZodiac(d: Date) {
 
 // ocidental — curiosidades curtas
 const WESTERN_FACTS: Record<string, string> = {
-  "Áries": "Elemento: Fogo 🔥 • Palavra-chave: iniciativa. Costuma liderar e começar projetos.",
-  "Touro": "Elemento: Terra 🌱 • Palavra-chave: estabilidade. Valoriza segurança e constância.",
-  "Gêmeos": "Elemento: Ar 💨 • Palavra-chave: comunicação. Aprende e se adapta rápido.",
-  "Câncer": "Elemento: Água 💧 • Palavra-chave: cuidado. Forte memória e intuição.",
-  "Leão": "Elemento: Fogo 🔥 • Palavra-chave: expressão. Criatividade e confiança em alta.",
-  "Virgem": "Elemento: Terra 🌱 • Palavra-chave: análise. Detalhista, prático e organizado.",
-  "Libra": "Elemento: Ar 💨 • Palavra-chave: equilíbrio. Media conflitos e ama harmonia.",
-  "Escorpião": "Elemento: Água 💧 • Palavra-chave: intensidade. Olhar investigativo e transformador.",
-  "Sagitário": "Elemento: Fogo 🔥 • Palavra-chave: expansão. Busca sentido, viagens e ideias grandes.",
-  "Capricórnio": "Elemento: Terra 🌱 • Palavra-chave: disciplina. Paciência e ambição de longo prazo.",
-  "Aquário": "Elemento: Ar 💨 • Palavra-chave: originalidade. Inovação e visão coletiva.",
-  "Peixes": "Elemento: Água 💧 • Palavra-chave: empatia. Imaginação e sensibilidade elevadas.",
+  Áries: "Elemento: Fogo 🔥 • Palavra-chave: iniciativa. Costuma liderar e começar projetos.",
+  Touro: "Elemento: Terra 🌱 • Palavra-chave: estabilidade. Valoriza segurança e constância.",
+  Gêmeos: "Elemento: Ar 💨 • Palavra-chave: comunicação. Aprende e se adapta rápido.",
+  Câncer: "Elemento: Água 💧 • Palavra-chave: cuidado. Forte memória e intuição.",
+  Leão: "Elemento: Fogo 🔥 • Palavra-chave: expressão. Criatividade e confiança em alta.",
+  Virgem: "Elemento: Terra 🌱 • Palavra-chave: análise. Detalhista, prático e organizado.",
+  Libra: "Elemento: Ar 💨 • Palavra-chave: equilíbrio. Media conflitos e ama harmonia.",
+  Escorpião: "Elemento: Água 💧 • Palavra-chave: intensidade. Olhar investigativo e transformador.",
+  Sagitário:
+    "Elemento: Fogo 🔥 • Palavra-chave: expansão. Busca sentido, viagens e ideias grandes.",
+  Capricórnio:
+    "Elemento: Terra 🌱 • Palavra-chave: disciplina. Paciência e ambição de longo prazo.",
+  Aquário: "Elemento: Ar 💨 • Palavra-chave: originalidade. Inovação e visão coletiva.",
+  Peixes: "Elemento: Água 💧 • Palavra-chave: empatia. Imaginação e sensibilidade elevadas.",
 };
 
 // signo chinês
@@ -96,18 +90,18 @@ function chineseZodiac(year: number) {
 
 // chinês — curiosidades curtas
 const CHINESE_FACTS: Record<string, string> = {
-  "Rato": "Astuto e versátil. Aproveita oportunidades e aprende depressa.",
-  "Boi": "Constante e trabalhador. Progresso firme, sem atalhos.",
-  "Tigre": "Corajoso e competitivo. Enfrenta desafios de frente.",
-  "Coelho": "Diplomático e gentil. Valoriza paz e elegância.",
-  "Dragão": "Magnético e confiante. Carisma para liderar.",
-  "Serpente": "Observadora e sábia. Prefere estratégias discretas.",
-  "Cavalo": "Enérgico e livre. Precisa de movimento e aventura.",
-  "Carneiro": "Criativo e solidário. Sensível à estética e ao grupo.",
-  "Macaco": "Curioso e inventivo. Adora desafios mentais.",
-  "Galo": "Detalhista e pontual. Preza organização e clareza.",
-  "Cão": "Leal e protetor. Forte senso de justiça.",
-  "Porco": "Generoso e sociável. Busca conforto e bons momentos.",
+  Rato: "Astuto e versátil. Aproveita oportunidades e aprende depressa.",
+  Boi: "Constante e trabalhador. Progresso firme, sem atalhos.",
+  Tigre: "Corajoso e competitivo. Enfrenta desafios de frente.",
+  Coelho: "Diplomático e gentil. Valoriza paz e elegância.",
+  Dragão: "Magnético e confiante. Carisma para liderar.",
+  Serpente: "Observadora e sábia. Prefere estratégias discretas.",
+  Cavalo: "Enérgico e livre. Precisa de movimento e aventura.",
+  Carneiro: "Criativo e solidário. Sensível à estética e ao grupo.",
+  Macaco: "Curioso e inventivo. Adora desafios mentais.",
+  Galo: "Detalhista e pontual. Preza organização e clareza.",
+  Cão: "Leal e protetor. Forte senso de justiça.",
+  Porco: "Generoso e sociável. Busca conforto e bons momentos.",
 };
 
 function diffYMD(from: Date, to: Date): AgeBreakdown {
@@ -239,8 +233,8 @@ export default function IdadeClient() {
   }, [date]);
 
   // textos de tooltip
-  const westernTip = calc ? WESTERN_FACTS[calc.western] ?? "" : "";
-  const chineseTip = calc ? CHINESE_FACTS[calc.chinese] ?? "" : "";
+  const westernTip = calc ? (WESTERN_FACTS[calc.western] ?? "") : "";
+  const chineseTip = calc ? (CHINESE_FACTS[calc.chinese] ?? "") : "";
 
   return (
     <div className="mx-auto max-w-4xl space-y-6">
@@ -280,11 +274,14 @@ export default function IdadeClient() {
             <Hourglass className="h-5 w-5 text-indigo-600" aria-hidden />
           </div>
           <div className="text-3xl font-semibold text-slate-900">
-            {calc ? `${calc.ymd.years} anos, ${calc.ymd.months} meses, ${calc.ymd.days} dias` : "--"}
+            {calc
+              ? `${calc.ymd.years} anos, ${calc.ymd.months} meses, ${calc.ymd.days} dias`
+              : "--"}
           </div>
           {calc && (
             <div className="mt-2 text-sm text-slate-500">
-              Nasc.: <strong className="font-medium text-slate-700">{fmtDate(calc.birth)}</strong> ({calc.weekdayBirth})
+              Nasc.: <strong className="font-medium text-slate-700">{fmtDate(calc.birth)}</strong> (
+              {calc.weekdayBirth})
             </div>
           )}
         </div>
@@ -308,12 +305,36 @@ export default function IdadeClient() {
       {/* Tabela principal */}
       <section className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
         <div className="grid grid-cols-1 divide-y divide-slate-200 text-sm md:grid-cols-2 md:divide-x md:divide-y-0">
-          <Row label="Dias vividos" value={calc ? `${fmt(calc.days)} dias` : "—"} icon={<Clock className="h-4 w-4" />} />
-          <Row label="Horas vividas" value={calc ? `${fmt(calc.hours)} horas` : "—"} icon={<Clock className="h-4 w-4" />} />
-          <Row label="Minutos vividos" value={calc ? `${fmt(calc.minutes)} minutos` : "—"} icon={<Clock className="h-4 w-4" />} />
-          <Row label="Segundos vividos" value={calc ? `${fmt(calc.seconds)} segundos` : "—"} icon={<Clock className="h-4 w-4" />} />
-          <Row label="Semanas vividas" value={calc ? `${fmt(calc.weeks)} semanas` : "—"} icon={<Clock className="h-4 w-4" />} />
-          <Row label="Anos bissextos vividos" value={calc ? `${fmt(calc.leapCount)} anos` : "—"} icon={<Info className="h-4 w-4" />} />
+          <Row
+            label="Dias vividos"
+            value={calc ? `${fmt(calc.days)} dias` : "—"}
+            icon={<Clock className="h-4 w-4" />}
+          />
+          <Row
+            label="Horas vividas"
+            value={calc ? `${fmt(calc.hours)} horas` : "—"}
+            icon={<Clock className="h-4 w-4" />}
+          />
+          <Row
+            label="Minutos vividos"
+            value={calc ? `${fmt(calc.minutes)} minutos` : "—"}
+            icon={<Clock className="h-4 w-4" />}
+          />
+          <Row
+            label="Segundos vividos"
+            value={calc ? `${fmt(calc.seconds)} segundos` : "—"}
+            icon={<Clock className="h-4 w-4" />}
+          />
+          <Row
+            label="Semanas vividas"
+            value={calc ? `${fmt(calc.weeks)} semanas` : "—"}
+            icon={<Clock className="h-4 w-4" />}
+          />
+          <Row
+            label="Anos bissextos vividos"
+            value={calc ? `${fmt(calc.leapCount)} anos` : "—"}
+            icon={<Info className="h-4 w-4" />}
+          />
         </div>
       </section>
 
@@ -330,18 +351,14 @@ export default function IdadeClient() {
             <ul className="list-inside list-disc text-sm text-slate-600">
               <li className="flex items-center">
                 Ocidental (Sol):{" "}
-                <span className="ml-1 font-medium text-slate-800">
-                  {calc ? calc.western : "—"}
-                </span>
+                <span className="ml-1 font-medium text-slate-800">{calc ? calc.western : "—"}</span>
                 {calc && westernTip && (
                   <InfoBadge label={`signo ocidental ${calc.western}`} tip={westernTip} />
                 )}
               </li>
               <li className="mt-1 flex items-center">
                 Chinês (ano):{" "}
-                <span className="ml-1 font-medium text-slate-800">
-                  {calc ? calc.chinese : "—"}
-                </span>
+                <span className="ml-1 font-medium text-slate-800">{calc ? calc.chinese : "—"}</span>
                 {calc && chineseTip && (
                   <InfoBadge label={`signo chinês ${calc.chinese}`} tip={chineseTip} />
                 )}
@@ -352,7 +369,9 @@ export default function IdadeClient() {
 
           <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
             <div className="mb-2 flex items-center justify-between">
-              <span className="text-sm font-medium text-slate-700">Corpo em números (estimativas)</span>
+              <span className="text-sm font-medium text-slate-700">
+                Corpo em números (estimativas)
+              </span>
               <HeartPulse className="h-5 w-5 text-indigo-600" aria-hidden />
             </div>
             <ul className="list-inside list-disc text-sm text-slate-600">
@@ -387,9 +406,7 @@ export default function IdadeClient() {
                   className="rounded-lg border border-slate-200 bg-white px-3 py-2"
                 >
                   <div className="text-slate-500">{p.planet}</div>
-                  <div className="text-lg font-semibold text-slate-900">
-                    {fmt(p.years, 2)} anos
-                  </div>
+                  <div className="text-lg font-semibold text-slate-900">{fmt(p.years, 2)} anos</div>
                 </div>
               ))
             ) : (
@@ -402,15 +419,7 @@ export default function IdadeClient() {
   );
 }
 
-function Row({
-  label,
-  value,
-  icon,
-}: {
-  label: string;
-  value: string;
-  icon?: React.ReactNode;
-}) {
+function Row({ label, value, icon }: { label: string; value: string; icon?: React.ReactNode }) {
   return (
     <div className="flex items-center justify-between gap-3 p-4">
       <div className="flex items-center gap-2">

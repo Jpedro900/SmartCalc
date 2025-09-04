@@ -17,7 +17,7 @@ export const BRAND = {
       900: "#312e81",
     },
     neutral: {
-      50: "#f8fafc",   // slate-50
+      50: "#f8fafc", // slate-50
       100: "#f1f5f9",
       200: "#e2e8f0",
       300: "#cbd5e1",
@@ -30,11 +30,11 @@ export const BRAND = {
     },
     success: "#10b981",
     warning: "#f59e0b",
-    danger:  "#ef4444",
+    danger: "#ef4444",
   },
   radius: {
-    sm: "0.5rem",     // rounded-lg
-    md: "0.75rem",    // rounded-xl
+    sm: "0.5rem", // rounded-lg
+    md: "0.75rem", // rounded-xl
     lg: "1rem",
   },
   shadow: {

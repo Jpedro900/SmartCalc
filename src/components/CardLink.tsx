@@ -1,7 +1,17 @@
 import Link from "next/link";
 
-export function CardLink({ href, title, desc, badge, icon }: {
-  href: string; title: string; desc: string; badge?: string; icon?: React.ReactNode;
+export function CardLink({
+  href,
+  title,
+  desc,
+  badge,
+  icon,
+}: {
+  href: string;
+  title: string;
+  desc: string;
+  badge?: string;
+  icon?: React.ReactNode;
 }) {
   return (
     <Link

@@ -27,12 +27,12 @@ type DecisionMethod = "ratio70" | "costPerKm";
 type Result = {
   method: DecisionMethod;
   recommend: "etanol" | "gasolina";
-  ratio: number;                  // etanol/gasolina (preço)
-  costKmE?: number;               // R$/km
-  costKmG?: number;               // R$/km
-  savePerKm?: number;             // R$/km
-  savePerTank?: number;           // R$/tanque
-  savePerMonth?: number;          // R$/mês
+  ratio: number; // etanol/gasolina (preço)
+  costKmE?: number; // R$/km
+  costKmG?: number; // R$/km
+  savePerKm?: number; // R$/km
+  savePerTank?: number; // R$/tanque
+  savePerMonth?: number; // R$/mês
 };
 
 export default function CombustivelClient() {
@@ -45,7 +45,7 @@ export default function CombustivelClient() {
   const [kmLEtaStr, setKmLEtaStr] = useState("");
 
   // parâmetros de economia
-  const [tankStr, setTankStr] = useState("50");     // L
+  const [tankStr, setTankStr] = useState("50"); // L
   const [kmMonthStr, setKmMonthStr] = useState("1000"); // km/mês
 
   const parsed = useMemo(() => {
@@ -74,12 +74,11 @@ export default function CombustivelClient() {
       const savePerKm = Math.abs(costKmG - costKmE);
       // por tanque (aprox: tanque cheio → litros * custo por L, convertido pra km)
       // melhor é converter por km → supondo que um tanque gera kmTank = tank*kmL do combustível recomendado
-      const kmPorTanque =
-        recommend === "etanol" ? tank * kmE : tank * kmG;
+      const kmPorTanque = recommend === "etanol" ? tank * kmE : tank * kmG;
       const custoTanqueRecomendado =
-        recommend === "etanol" ? (kmPorTanque * costKmE) : (kmPorTanque * costKmG);
+        recommend === "etanol" ? kmPorTanque * costKmE : kmPorTanque * costKmG;
       const custoTanqueAlternativo =
-        recommend === "etanol" ? (kmPorTanque * costKmG) : (kmPorTanque * costKmE);
+        recommend === "etanol" ? kmPorTanque * costKmG : kmPorTanque * costKmE;
       const savePerTank = Math.max(0, custoTanqueAlternativo - custoTanqueRecomendado);
 
       const savePerMonth = isFinite(kmMonth) && kmMonth > 0 ? kmMonth * savePerKm : undefined;
@@ -97,7 +96,7 @@ export default function CombustivelClient() {
     }
 
     // Sem consumo: usar regra dos 70%
-    const recommend = ratio <= 0.70 ? "etanol" : "gasolina";
+    const recommend = ratio <= 0.7 ? "etanol" : "gasolina";
     return { method: "ratio70", recommend, ratio };
   }, [parsed]);
 
@@ -105,7 +104,9 @@ export default function CombustivelClient() {
     if (!result) return null;
     const isE = result.recommend === "etanol";
     const title = isE ? "Abasteça com Etanol" : "Abasteça com Gasolina";
-    const tone = isE ? "text-emerald-700 bg-emerald-50 border-emerald-200" : "text-indigo-700 bg-indigo-50 border-indigo-200";
+    const tone = isE
+      ? "text-emerald-700 bg-emerald-50 border-emerald-200"
+      : "text-indigo-700 bg-indigo-50 border-indigo-200";
     return { isE, title, tone };
   }, [result]);
 
@@ -200,8 +201,10 @@ export default function CombustivelClient() {
           <Info className="mt-0.5 h-4 w-4 text-slate-400" />
           <p>
             Sem os consumos, utilizamos a <strong>regra dos 70%</strong>: etanol compensa quando
-            <code className="mx-1 rounded bg-slate-100 px-1.5 py-0.5">preço do etanol / preço da gasolina ≤ 0,70</code>.
-            Com os consumos informados, a decisão considera o <strong>custo por km</strong>.
+            <code className="mx-1 rounded bg-slate-100 px-1.5 py-0.5">
+              preço do etanol / preço da gasolina ≤ 0,70
+            </code>
+            . Com os consumos informados, a decisão considera o <strong>custo por km</strong>.
           </p>
         </div>
       </section>
@@ -216,9 +219,7 @@ export default function CombustivelClient() {
           aria-live="polite"
         >
           <div className="text-sm text-slate-600">Recomendação</div>
-          <div className="mt-1 text-2xl font-semibold">
-            {result ? recomendacao!.title : "—"}
-          </div>
+          <div className="mt-1 text-2xl font-semibold">{result ? recomendacao!.title : "—"}</div>
           <div className="mt-1 text-sm">
             {result ? (
               result.method === "ratio70" ? (
@@ -228,8 +229,8 @@ export default function CombustivelClient() {
                 </>
               ) : (
                 <>
-                  Custo por km — Etanol: <strong>{fmtMoneyBRL(result.costKmE!)}</strong> •
-                  {" "}Gasolina: <strong>{fmtMoneyBRL(result.costKmG!)}</strong>
+                  Custo por km — Etanol: <strong>{fmtMoneyBRL(result.costKmE!)}</strong> • Gasolina:{" "}
+                  <strong>{fmtMoneyBRL(result.costKmG!)}</strong>
                 </>
               )
             ) : (
@@ -240,20 +241,12 @@ export default function CombustivelClient() {
 
         <Card
           title="Economia por tanque"
-          value={
-            result && result.savePerTank != null
-              ? fmtMoneyBRL(result.savePerTank)
-              : "—"
-          }
+          value={result && result.savePerTank != null ? fmtMoneyBRL(result.savePerTank) : "—"}
           icon={<TrendingDown className="h-5 w-5 text-indigo-600" aria-hidden />}
         />
         <Card
           title="Economia por mês"
-          value={
-            result && result.savePerMonth != null
-              ? fmtMoneyBRL(result.savePerMonth)
-              : "—"
-          }
+          value={result && result.savePerMonth != null ? fmtMoneyBRL(result.savePerMonth) : "—"}
           icon={<Wallet className="h-5 w-5 text-indigo-600" aria-hidden />}
         />
         <Card
@@ -288,15 +281,7 @@ function Field({
   );
 }
 
-function Card({
-  title,
-  value,
-  icon,
-}: {
-  title: string;
-  value: string;
-  icon?: React.ReactNode;
-}) {
+function Card({ title, value, icon }: { title: string; value: string; icon?: React.ReactNode }) {
   return (
     <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
       <div className="mb-1 flex items-center justify-between">

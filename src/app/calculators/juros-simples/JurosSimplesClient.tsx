@@ -2,14 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Calculator, Percent, Calendar, Banknote, Info } from "lucide-react";
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  ResponsiveContainer,
-  Tooltip as RTooltip,
-} from "recharts";
+import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer, Tooltip as RTooltip } from "recharts";
 
 type RateMode = "ad" | "am" | "aa"; // ao dia / ao mês / ao ano
 type PeriodMode = "dias" | "meses" | "anos";
@@ -166,8 +159,8 @@ export default function JurosSimplesClient() {
         <div className="mt-3 flex items-start gap-2 text-sm text-slate-600">
           <Info className="mt-0.5 h-4 w-4 text-slate-400" />
           <p>
-            Fórmula: <strong>J = PV × i × n</strong>. O montante é <strong>M = PV + J</strong>. A taxa e o período
-            são convertidos para uma base comum (dias) para o cálculo.
+            Fórmula: <strong>J = PV × i × n</strong>. O montante é <strong>M = PV + J</strong>. A
+            taxa e o período são convertidos para uma base comum (dias) para o cálculo.
           </p>
         </div>
       </section>
@@ -176,10 +169,7 @@ export default function JurosSimplesClient() {
       <section className="grid gap-4 md:grid-cols-3">
         <Card title="Juros (J)" value={parsed ? fmtMoneyBRL(parsed.J) : "—"} />
         <Card title="Montante (M)" value={parsed ? fmtMoneyBRL(parsed.M) : "—"} />
-        <Card
-          title="Período (dias)"
-          value={parsed ? fmtBR(parsed.dias, 0) : "—"}
-        />
+        <Card title="Período (dias)" value={parsed ? fmtBR(parsed.dias, 0) : "—"} />
 
         {/* gráfico */}
         <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm md:col-span-3">

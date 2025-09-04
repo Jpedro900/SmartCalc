@@ -4,8 +4,14 @@ import { useId, useState } from "react";
 type Tab = { id: string; label: string };
 
 export function Tabs({
-  tabs, onChange, initial = 0,
-}: { tabs: Tab[]; onChange: (index: number) => void; initial?: number }) {
+  tabs,
+  onChange,
+  initial = 0,
+}: {
+  tabs: Tab[];
+  onChange: (index: number) => void;
+  initial?: number;
+}) {
   const [active, setActive] = useState(initial);
   const tablistId = useId();
 
@@ -26,9 +32,16 @@ export function Tabs({
                 ? "border-blue-600 bg-blue-50 text-blue-700"
                 : "border-slate-200 bg-white hover:bg-slate-50")
             }
-            onClick={() => { setActive(i); onChange(i); }}
+            onClick={() => {
+              setActive(i);
+              onChange(i);
+            }}
             onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActive(i); onChange(i); }
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setActive(i);
+                onChange(i);
+              }
             }}
           >
             {t.label}

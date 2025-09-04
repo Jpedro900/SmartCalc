@@ -18,7 +18,7 @@ export function Footer() {
           {/* bloco da marca */}
           <div>
             <div className="flex items-center gap-2">
-              <Logo size={50}/>
+              <Logo size={50} />
             </div>
             <p className="mt-3 text-sm text-slate-600">
               Calculadoras simples, rápidas e confiáveis.

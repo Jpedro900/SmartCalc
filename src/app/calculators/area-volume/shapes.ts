@@ -19,7 +19,7 @@ export type Shape3D = {
   params: Param[];
   volume: (p: Record<string, number>) => number; // m³
   formula?: string;
- annotate?: (p: Record<string, number>) => "a" | "r" | "r-h" | "abc" | undefined;
+  annotate?: (p: Record<string, number>) => "a" | "r" | "r-h" | "abc" | undefined;
 };
 
 const PI = Math.PI;
@@ -63,7 +63,7 @@ export const SHAPES2D: Shape2D[] = [
       { id: "b", label: "Base menor", dim: "L" },
       { id: "h", label: "Altura", dim: "L" },
     ],
-    area: (p) => ((p.B ?? 0) + (p.b ?? 0)) * (p.h ?? 0) / 2,
+    area: (p) => (((p.B ?? 0) + (p.b ?? 0)) * (p.h ?? 0)) / 2,
     formula: "A = (B + b) · h / 2",
     annotate: () => "ab",
   },

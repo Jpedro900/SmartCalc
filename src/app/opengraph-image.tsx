@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from "next/og";
 
 export const size = { width: 1200, height: 630 };
@@ -17,7 +16,14 @@ export default async function OGImage() {
           color: "#0f172a",
         }}
       >
-        <div style={{ margin: 64, display: "flex", flexDirection: "column", gap: 24 }}>
+        <div
+          style={{
+            margin: 64,
+            display: "flex",
+            flexDirection: "column",
+            gap: 24,
+          }}
+        >
           {/* “chip” com o cérebro */}
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
             <div
@@ -31,8 +37,23 @@ export default async function OGImage() {
               }}
             >
               {/* sinal de igual como “cérebro/calculadora” minimal */}
-              <div style={{ width: 28, height: 3, background: "#fff", borderRadius: 2, marginBottom: 4 }} />
-              <div style={{ width: 28, height: 3, background: "#fff", borderRadius: 2 }} />
+              <div
+                style={{
+                  width: 28,
+                  height: 3,
+                  background: "#fff",
+                  borderRadius: 2,
+                  marginBottom: 4,
+                }}
+              />
+              <div
+                style={{
+                  width: 28,
+                  height: 3,
+                  background: "#fff",
+                  borderRadius: 2,
+                }}
+              />
             </div>
             <div style={{ fontSize: 48, fontWeight: 700 }}>
               Smart<span style={{ color: "#4f46e5" }}>Calc</span>
@@ -40,10 +61,19 @@ export default async function OGImage() {
           </div>
 
           <div style={{ fontSize: 28, color: "#334155", maxWidth: 900 }}>
-            Hub de calculadoras e conversores — IMC, porcentagem, juros, regra de 3, moedas, unidades e mais.
+            Hub de calculadoras e conversores — IMC, porcentagem, juros, regra de 3, moedas,
+            unidades e mais.
           </div>
 
-          <div style={{ marginTop: 8, display: "flex", gap: 12, color: "#475569", fontSize: 22 }}>
+          <div
+            style={{
+              marginTop: 8,
+              display: "flex",
+              gap: 12,
+              color: "#475569",
+              fontSize: 22,
+            }}
+          >
             <span>⚡ Rápido</span>
             <span>•</span>
             <span>🎯 Simples</span>

@@ -5,7 +5,11 @@ import { useMemo, useState, ReactNode } from "react";
 /* ========== helpers ========== */
 
 function parseNum(s: string) {
-  const n = Number(String(s).replace(/[^\d,.-]/g, "").replace(",", "."));
+  const n = Number(
+    String(s)
+      .replace(/[^\d,.-]/g, "")
+      .replace(",", ".")
+  );
   return Number.isFinite(n) ? n : NaN;
 }
 
@@ -66,8 +70,7 @@ function Tabs({
   value: "simples" | "composta";
   onChange: (v: "simples" | "composta") => void;
 }) {
-  const btn =
-    "px-3 py-2 text-sm font-medium rounded-lg border transition-colors";
+  const btn = "px-3 py-2 text-sm font-medium rounded-lg border transition-colors";
   return (
     <div className="inline-flex gap-2 rounded-xl bg-slate-100 p-1">
       <button
@@ -150,8 +153,8 @@ export default function RegraDe3Client() {
     <main className="mx-auto max-w-3xl px-4 py-8">
       <h1 className="text-2xl font-bold">Regra de 3</h1>
       <p className="mt-2 text-sm text-slate-600">
-        Preencha os campos. O cálculo é automático. Na <b>composta</b>, indique
-        se cada grandeza é <b>direta</b> ou <b>inversa</b> em relação ao resultado.
+        Preencha os campos. O cálculo é automático. Na <b>composta</b>, indique se cada grandeza é{" "}
+        <b>direta</b> ou <b>inversa</b> em relação ao resultado.
       </p>
 
       <div className="mt-4">
@@ -168,9 +171,7 @@ export default function RegraDe3Client() {
                 <InlineBox value={b} onChange={setB} placeholder="B" width="14ch" />
               </div>
 
-              <div className="text-xs font-semibold tracking-wide text-slate-500">
-                ASSIM COMO
-              </div>
+              <div className="text-xs font-semibold tracking-wide text-slate-500">ASSIM COMO</div>
 
               <div className="flex items-center gap-2">
                 <InlineBox value={c} onChange={setC} placeholder="C" width="14ch" />

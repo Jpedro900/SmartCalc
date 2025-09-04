@@ -13,13 +13,50 @@ const API_FF = "https://api.frankfurter.app";
 const CHIPS: string[] = ["USD", "BRL", "EUR", "GBP", "JPY", "ARS"];
 
 const POPULAR_ALL: string[] = [
-  "USD","BRL","EUR","GBP","JPY","ARS",
-  "CAD","AUD","CHF","CNY",
-  "MXN","CLP","COP","PEN","UYU","BOB","PYG","VES",
-  "ZAR","TRY","PLN","SEK","NOK","DKK","CZK","HUF","RON",
-  "HKD","SGD","NZD","KRW","TWD","THB","IDR","MYR","PHP","VND","INR",
-  "AED","SAR","ILS","EGP",
-  "BTC","ETH",
+  "USD",
+  "BRL",
+  "EUR",
+  "GBP",
+  "JPY",
+  "ARS",
+  "CAD",
+  "AUD",
+  "CHF",
+  "CNY",
+  "MXN",
+  "CLP",
+  "COP",
+  "PEN",
+  "UYU",
+  "BOB",
+  "PYG",
+  "VES",
+  "ZAR",
+  "TRY",
+  "PLN",
+  "SEK",
+  "NOK",
+  "DKK",
+  "CZK",
+  "HUF",
+  "RON",
+  "HKD",
+  "SGD",
+  "NZD",
+  "KRW",
+  "TWD",
+  "THB",
+  "IDR",
+  "MYR",
+  "PHP",
+  "VND",
+  "INR",
+  "AED",
+  "SAR",
+  "ILS",
+  "EGP",
+  "BTC",
+  "ETH",
 ];
 
 type CurrencyInfo = { name: string; flag: string; country: string };
@@ -77,14 +114,50 @@ const CURRENCY_META: Record<string, CurrencyInfo> = {
 };
 
 const SYMBOL: Record<string, string> = {
-  USD: "$", BRL: "R$", EUR: "€", GBP: "£", JPY: "¥", CNY: "¥",
-  AUD: "A$", CAD: "C$", CHF: "Fr.", ARS: "$", MXN: "$", CLP: "$",
-  COP: "$", PEN: "S/", UYU: "$U", BOB: "Bs", PYG: "₲", VES: "Bs.",
-  ZAR: "R", TRY: "₺", PLN: "zł", SEK: "kr", NOK: "kr", DKK: "kr",
-  HUF: "Ft", CZK: "Kč", RON: "lei", HKD: "HK$", SGD: "S$", NZD: "NZ$",
-  KRW: "₩", TWD: "NT$", THB: "฿", IDR: "Rp", MYR: "RM", PHP: "₱",
-  VND: "₫", INR: "₹", AED: "د.إ", SAR: "﷼", ILS: "₪", EGP: "E£",
-  BTC: "₿", ETH: "Ξ",
+  USD: "$",
+  BRL: "R$",
+  EUR: "€",
+  GBP: "£",
+  JPY: "¥",
+  CNY: "¥",
+  AUD: "A$",
+  CAD: "C$",
+  CHF: "Fr.",
+  ARS: "$",
+  MXN: "$",
+  CLP: "$",
+  COP: "$",
+  PEN: "S/",
+  UYU: "$U",
+  BOB: "Bs",
+  PYG: "₲",
+  VES: "Bs.",
+  ZAR: "R",
+  TRY: "₺",
+  PLN: "zł",
+  SEK: "kr",
+  NOK: "kr",
+  DKK: "kr",
+  HUF: "Ft",
+  CZK: "Kč",
+  RON: "lei",
+  HKD: "HK$",
+  SGD: "S$",
+  NZD: "NZ$",
+  KRW: "₩",
+  TWD: "NT$",
+  THB: "฿",
+  IDR: "Rp",
+  MYR: "RM",
+  PHP: "₱",
+  VND: "₫",
+  INR: "₹",
+  AED: "د.إ",
+  SAR: "﷼",
+  ILS: "₪",
+  EGP: "E£",
+  BTC: "₿",
+  ETH: "Ξ",
 };
 
 type Mode = "comercial" | "turistico";
@@ -96,12 +169,19 @@ const isCrypto = (c: string) => c === "BTC" || c === "ETH";
 const cgIdFor = (c: string) => (c === "BTC" ? "bitcoin" : c === "ETH" ? "ethereum" : "");
 
 function parseNum(s: string) {
-  const n = Number(String(s).replace(/[^\d,.-]/g, "").replace(",", "."));
+  const n = Number(
+    String(s)
+      .replace(/[^\d,.-]/g, "")
+      .replace(",", ".")
+  );
   return Number.isFinite(n) ? n : NaN;
 }
 function format2(n: number) {
   if (!Number.isFinite(n)) return "";
-  return n.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return n.toLocaleString("pt-BR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 }
 function formatRate(n: number) {
   if (!Number.isFinite(n)) return "";
@@ -143,7 +223,11 @@ async function fetchRate(
   quote = quote.toUpperCase();
 
   if (base === quote) {
-    return { rate: 1, date: new Date().toISOString().slice(0, 10), provider: "static" };
+    return {
+      rate: 1,
+      date: new Date().toISOString().slice(0, 10),
+      provider: "static",
+    };
   }
 
   // FIAT ↔ FIAT
@@ -151,28 +235,47 @@ async function fetchRate(
     try {
       const j = await fetchJSON(`${API_FIAT}/convert?from=${base}&to=${quote}&amount=1`);
       const res = Number(j?.result);
-      if (Number.isFinite(res)) return { rate: res, date: j?.date ?? "", provider: "exchangerate.host/convert" };
+      if (Number.isFinite(res))
+        return {
+          rate: res,
+          date: j?.date ?? "",
+          provider: "exchangerate.host/convert",
+        };
     } catch {}
 
     try {
       const j = await fetchJSON(`${API_FIAT}/latest?base=${base}`);
       const res = Number(j?.rates?.[quote]);
-      if (Number.isFinite(res)) return { rate: res, date: j?.date ?? "", provider: "exchangerate.host/latest" };
+      if (Number.isFinite(res))
+        return {
+          rate: res,
+          date: j?.date ?? "",
+          provider: "exchangerate.host/latest",
+        };
     } catch {}
 
     try {
       const j = await fetchJSON(`${API_FIAT}/latest?base=USD`);
       const q = Number(j?.rates?.[quote]); // USD->QUOTE
-      const b = Number(j?.rates?.[base]);  // USD->BASE
+      const b = Number(j?.rates?.[base]); // USD->BASE
       if (Number.isFinite(q) && Number.isFinite(b) && b !== 0) {
-        return { rate: q / b, date: j?.date ?? "", provider: "exchangerate.host/USD-cross" };
+        return {
+          rate: q / b,
+          date: j?.date ?? "",
+          provider: "exchangerate.host/USD-cross",
+        };
       }
     } catch {}
 
     try {
       const j = await fetchJSON(`${API_FF}/latest?from=${base}&to=${quote}`);
       const res = Number(j?.rates?.[quote]);
-      if (Number.isFinite(res)) return { rate: res, date: j?.date ?? "", provider: "frankfurter.direct" };
+      if (Number.isFinite(res))
+        return {
+          rate: res,
+          date: j?.date ?? "",
+          provider: "frankfurter.direct",
+        };
     } catch {}
 
     try {
@@ -180,7 +283,11 @@ async function fetchRate(
       const q = Number(j?.rates?.[quote]);
       const b = Number(j?.rates?.[base]);
       if (Number.isFinite(q) && Number.isFinite(b) && b !== 0) {
-        return { rate: q / b, date: j?.date ?? "", provider: "frankfurter.USD-cross" };
+        return {
+          rate: q / b,
+          date: j?.date ?? "",
+          provider: "frankfurter.USD-cross",
+        };
       }
     } catch {}
 
@@ -193,7 +300,11 @@ async function fetchRate(
     const vs = quote.toLowerCase();
     const j = await fetchJSON(`${API_CG}/simple/price?ids=${id}&vs_currencies=${vs}`);
     const val = Number(j?.[id]?.[vs]);
-    return { rate: val, date: new Date().toISOString().slice(0, 10), provider: `coingecko:${id}->${vs}` };
+    return {
+      rate: val,
+      date: new Date().toISOString().slice(0, 10),
+      provider: `coingecko:${id}->${vs}`,
+    };
   }
 
   if (!isCrypto(base) && isCrypto(quote)) {
@@ -247,7 +358,9 @@ function FlagImage({ code }: FlagImageProps) {
 
   const src = `/flags/${meta.country.toLowerCase()}.svg`;
   return broken ? (
-    <span aria-hidden className="text-lg leading-none">{meta.flag}</span>
+    <span aria-hidden className="text-lg leading-none">
+      {meta.flag}
+    </span>
   ) : (
     // eslint-disable-next-line @next/next/no-img-element
     <img
@@ -362,8 +475,8 @@ export default function MoedasClient() {
     <main className="mx-auto max-w-5xl px-4 py-8">
       <h1 className="text-2xl font-bold">Conversor de Moedas</h1>
       <p className="mt-2 text-sm text-slate-600">
-        Clique em <b>Converter agora</b> para buscar a cotação mais recente. Use <b>Comercial</b> para
-        taxa de mercado e <b>Turístico</b> para simular IOF e spread.
+        Clique em <b>Converter agora</b> para buscar a cotação mais recente. Use <b>Comercial</b>{" "}
+        para taxa de mercado e <b>Turístico</b> para simular IOF e spread.
       </p>
 
       <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -508,7 +621,11 @@ function FlagSelect({
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const meta = CURRENCY_META[value] ?? { name: value, flag: "🏳️", country: value };
+  const meta = CURRENCY_META[value] ?? {
+    name: value,
+    flag: "🏳️",
+    country: value,
+  };
 
   return (
     <div ref={ref} className="relative w-full">
@@ -520,7 +637,10 @@ function FlagSelect({
         <span className="flex items-center gap-2">
           <FlagImage code={value} />
           <span className="font-medium">
-            {meta.country} <span className="text-slate-400">({value} {meta.name})</span>
+            {meta.country}{" "}
+            <span className="text-slate-400">
+              ({value} {meta.name})
+            </span>
           </span>
         </span>
         <svg width="16" height="16" viewBox="0 0 20 20" className="text-slate-500">
@@ -546,7 +666,10 @@ function FlagSelect({
               >
                 <FlagImage code={c} />
                 <span className="font-medium">
-                  {m.country} <span className="text-slate-400">({c} {m.name})</span>
+                  {m.country}{" "}
+                  <span className="text-slate-400">
+                    ({c} {m.name})
+                  </span>
                 </span>
               </button>
             );
@@ -599,7 +722,9 @@ function CurrencyBox(props: {
               type="button"
               title={`${m.country} (${c} ${m.name})`}
             >
-              <span className="mr-1 inline-flex align-middle"><FlagImage code={c} /></span>
+              <span className="mr-1 inline-flex align-middle">
+                <FlagImage code={c} />
+              </span>
               {c}
             </button>
           );

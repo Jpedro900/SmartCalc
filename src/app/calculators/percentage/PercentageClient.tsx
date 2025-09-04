@@ -103,9 +103,21 @@ export default function PercentageClient() {
       {/* Tabs */}
       <div className="flex flex-wrap gap-2">
         <TabButton active={tab === "basico"} onClick={() => setTab("basico")} label="Básico" />
-        <TabButton active={tab === "reajuste"} onClick={() => setTab("reajuste")} label="Reajuste" />
-        <TabButton active={tab === "variacao"} onClick={() => setTab("variacao")} label="Variação" />
-        <TabButton active={tab === "proporcao"} onClick={() => setTab("proporcao")} label="Proporção (%)" />
+        <TabButton
+          active={tab === "reajuste"}
+          onClick={() => setTab("reajuste")}
+          label="Reajuste"
+        />
+        <TabButton
+          active={tab === "variacao"}
+          onClick={() => setTab("variacao")}
+          label="Variação"
+        />
+        <TabButton
+          active={tab === "proporcao"}
+          onClick={() => setTab("proporcao")}
+          label="Proporção (%)"
+        />
       </div>
 
       {/* Cards */}
@@ -136,7 +148,10 @@ export default function PercentageClient() {
             />
           </div>
 
-          <ResultCard title={`${fmtBR(basico.percentual, 2)}% de ${fmtBR(basico.base, 2)}`} value={fmtBR(basico.resultado, 2)} />
+          <ResultCard
+            title={`${fmtBR(basico.percentual, 2)}% de ${fmtBR(basico.base, 2)}`}
+            value={fmtBR(basico.resultado, 2)}
+          />
         </section>
       )}
 

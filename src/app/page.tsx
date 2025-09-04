@@ -27,12 +27,17 @@ export default function HomePage() {
 
       {/* ABAS */}
       <section id="categorias" className="mt-8 flex justify-center">
-        <Tabs tabs={CATEGORIES.map((c) => ({ id: c.toLowerCase(), label: c }))} onChange={setCatIndex} />
+        <Tabs
+          tabs={CATEGORIES.map((c) => ({ id: c.toLowerCase(), label: c }))}
+          onChange={setCatIndex}
+        />
       </section>
 
       {/* GRID */}
       <section id="todas" className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {filtered.map((tool) => <CardLink key={tool.href} {...tool} />)}
+        {filtered.map((tool) => (
+          <CardLink key={tool.href} {...tool} />
+        ))}
       </section>
     </main>
   );

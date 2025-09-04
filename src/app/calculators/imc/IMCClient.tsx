@@ -31,9 +31,7 @@ function classifyBMI(bmi: number): BmiCat {
   return "obeso";
 }
 
-function idealWeightRangeKg(
-  heightM: number
-): { min: number; max: number; target: number } | null {
+function idealWeightRangeKg(heightM: number): { min: number; max: number; target: number } | null {
   if (!Number.isFinite(heightM) || heightM <= 0) return null;
   const min = 18.5 * heightM * heightM;
   const max = 24.9 * heightM * heightM;
@@ -71,8 +69,7 @@ export default function IMCClient() {
 
   // IMC
   const bmi = useMemo(() => {
-    if (!Number.isFinite(heightM) || heightM <= 0 || !Number.isFinite(weightKg))
-      return NaN;
+    if (!Number.isFinite(heightM) || heightM <= 0 || !Number.isFinite(weightKg)) return NaN;
     return weightKg / (heightM * heightM);
   }, [heightM, weightKg]);
 
@@ -81,9 +78,7 @@ export default function IMCClient() {
 
   const targetKg = ideal?.target ?? NaN;
   const deltaKg =
-    Number.isFinite(targetKg) && Number.isFinite(weightKg)
-      ? targetKg - weightKg
-      : NaN;
+    Number.isFinite(targetKg) && Number.isFinite(weightKg) ? targetKg - weightKg : NaN;
 
   const imgSrc = imageFor(sex, cat);
   const [imgError, setImgError] = useState(false);
@@ -92,9 +87,8 @@ export default function IMCClient() {
     <main className="mx-auto max-w-xl px-4 py-10">
       <h1 className="text-2xl font-bold">Calculadora de IMC</h1>
       <p className="mt-2 text-sm text-slate-600">
-        Informe seu sexo, altura e peso. O IMC usa faixas OMS e o peso ideal é
-        estimado pela faixa saudável (18.5–24.9). Resultado meramente
-        informativo.
+        Informe seu sexo, altura e peso. O IMC usa faixas OMS e o peso ideal é estimado pela faixa
+        saudável (18.5–24.9). Resultado meramente informativo.
       </p>
 
       {/* sexo e unidades */}
@@ -187,22 +181,19 @@ export default function IMCClient() {
             {cat === "-"
               ? "--"
               : cat === "abaixo"
-              ? "Abaixo do peso"
-              : cat === "normal"
-              ? "Peso normal"
-              : cat === "acima"
-              ? "Sobrepeso"
-              : "Obesidade"}
+                ? "Abaixo do peso"
+                : cat === "normal"
+                  ? "Peso normal"
+                  : cat === "acima"
+                    ? "Sobrepeso"
+                    : "Obesidade"}
           </div>
 
-          <div className="mt-4 text-sm text-slate-600">
-            Peso ideal (estimativa)
-          </div>
+          <div className="mt-4 text-sm text-slate-600">Peso ideal (estimativa)</div>
           <div className="mt-1 text-sm">
             {ideal ? (
               <>
-                Faixa saudável: <b>{ideal.min.toFixed(1)} kg</b> –{" "}
-                <b>{ideal.max.toFixed(1)} kg</b>
+                Faixa saudável: <b>{ideal.min.toFixed(1)} kg</b> – <b>{ideal.max.toFixed(1)} kg</b>
                 <br />
                 Alvo sugerido: <b>{ideal.target.toFixed(1)} kg</b>
               </>
@@ -219,8 +210,7 @@ export default function IMCClient() {
                 </>
               ) : deltaKg < 0 ? (
                 <>
-                  Para atingir o alvo,{" "}
-                  <b>perca {Math.abs(deltaKg).toFixed(1)} kg</b>.
+                  Para atingir o alvo, <b>perca {Math.abs(deltaKg).toFixed(1)} kg</b>.
                 </>
               ) : (
                 <>Você já está no alvo sugerido.</>
@@ -242,7 +232,7 @@ export default function IMCClient() {
                 alt="Silhueta representando a faixa de IMC"
                 width={180}
                 height={240}
-                unoptimized 
+                unoptimized
                 onError={() => setImgError(true)}
                 className="h-48 w-auto"
               />

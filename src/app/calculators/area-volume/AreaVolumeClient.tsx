@@ -2,24 +2,18 @@
 
 import { useMemo, useState } from "react";
 import ShapeCanvas from "@/components/ShapeCanvas";
-import {
-  SHAPES2D,
-  SHAPES3D,
-  type Shape2D,
-  type Shape3D,
-} from "./shapes";
-import {
-  AREA_UNITS,
-  LENGTH_UNITS,
-  VOLUME_UNITS,
-  byId,
-} from "@/config/units-area-volume";
+import { SHAPES2D, SHAPES3D, type Shape2D, type Shape3D } from "./shapes";
+import { AREA_UNITS, LENGTH_UNITS, VOLUME_UNITS, byId } from "@/config/units-area-volume";
 
 type Mode = "2d" | "3d" | "draw";
 type Inputs = Record<string, string>;
 
 const num = (s: string) => {
-  const n = Number(String(s).replace(/[^\d,.-]/g, "").replace(",", "."));
+  const n = Number(
+    String(s)
+      .replace(/[^\d,.-]/g, "")
+      .replace(",", ".")
+  );
   return Number.isFinite(n) ? n : NaN;
 };
 const fmt = (v: number, frac = 6) =>
@@ -135,12 +129,7 @@ export default function AreaVolumeClient() {
             result={fmt(area)}
             unit={areaId}
             preview={
-              <FigurePreview2D
-                key={shape2d.id}
-                shape={shape2d}
-                inputs={inputs2d}
-                lenId={lenId}
-              />
+              <FigurePreview2D key={shape2d.id} shape={shape2d} inputs={inputs2d} lenId={lenId} />
             }
           />
         </section>
@@ -165,12 +154,7 @@ export default function AreaVolumeClient() {
             result={fmt(vol)}
             unit={volId}
             preview={
-              <FigurePreview3D
-                key={shape3d.id}
-                shape={shape3d}
-                inputs={inputs3d}
-                lenId={lenId}
-              />
+              <FigurePreview3D key={shape3d.id} shape={shape3d} inputs={inputs3d} lenId={lenId} />
             }
           />
         </section>
@@ -293,9 +277,7 @@ function FigureForm2D({
             </label>
             <input
               value={inputs[p.id] ?? ""}
-              onChange={(e) =>
-                setInputs((v) => ({ ...v, [p.id]: e.target.value }))
-              }
+              onChange={(e) => setInputs((v) => ({ ...v, [p.id]: e.target.value }))}
               className="mt-1 w-full rounded-md bg-slate-100 px-3 py-2"
               inputMode="decimal"
               placeholder="0"
@@ -347,9 +329,7 @@ function FigureForm3D({
             </label>
             <input
               value={inputs[p.id] ?? ""}
-              onChange={(e) =>
-                setInputs((v) => ({ ...v, [p.id]: e.target.value }))
-              }
+              onChange={(e) => setInputs((v) => ({ ...v, [p.id]: e.target.value }))}
               className="mt-1 w-full rounded-md bg-slate-100 px-3 py-2"
               inputMode="decimal"
               placeholder="0"
@@ -420,13 +400,17 @@ function FigurePreview2D({
           {Number.isFinite(b) && b > 0 && (
             <>
               <line x1="50" y1="130" x2="190" y2="130" stroke="#0ea5e9" />
-              <text x="120" y="148" textAnchor="middle" fontSize="12">b = {inputs.b} {lenId}</text>
+              <text x="120" y="148" textAnchor="middle" fontSize="12">
+                b = {inputs.b} {lenId}
+              </text>
             </>
           )}
           {Number.isFinite(h) && h > 0 && (
             <>
               <line x1="45" y1="35" x2="45" y2="125" stroke="#ef4444" />
-              <text x="32" y="85" textAnchor="middle" fontSize="12">h = {inputs.h} {lenId}</text>
+              <text x="32" y="85" textAnchor="middle" fontSize="12">
+                h = {inputs.h} {lenId}
+              </text>
             </>
           )}
         </>
@@ -438,13 +422,17 @@ function FigurePreview2D({
           {Number.isFinite(b) && (
             <>
               <line x1="40" y1="140" x2="200" y2="140" stroke="#0ea5e9" />
-              <text x="120" y="156" textAnchor="middle" fontSize="12">b = {inputs.b} {lenId}</text>
+              <text x="120" y="156" textAnchor="middle" fontSize="12">
+                b = {inputs.b} {lenId}
+              </text>
             </>
           )}
           {Number.isFinite(h) && (
             <>
               <line x1="120" y1="30" x2="120" y2="125" stroke="#ef4444" />
-              <text x="132" y="78" fontSize="12">h = {inputs.h} {lenId}</text>
+              <text x="132" y="78" fontSize="12">
+                h = {inputs.h} {lenId}
+              </text>
             </>
           )}
         </>
@@ -456,7 +444,9 @@ function FigurePreview2D({
           {Number.isFinite(r) && (
             <>
               <line x1="120" y1="80" x2="170" y2="80" stroke="#0ea5e9" />
-              <text x="145" y="74" textAnchor="middle" fontSize="12">r = {inputs.r} {lenId}</text>
+              <text x="145" y="74" textAnchor="middle" fontSize="12">
+                r = {inputs.r} {lenId}
+              </text>
             </>
           )}
         </>
@@ -468,19 +458,25 @@ function FigurePreview2D({
           {Number.isFinite(smB) && (
             <>
               <line x1="60" y1="140" x2="180" y2="140" stroke="#0ea5e9" />
-              <text x="120" y="156" textAnchor="middle" fontSize="12">B = {inputs.B} {lenId}</text>
+              <text x="120" y="156" textAnchor="middle" fontSize="12">
+                B = {inputs.B} {lenId}
+              </text>
             </>
           )}
           {Number.isFinite(smb) && (
             <>
               <line x1="40" y1="60" x2="200" y2="60" stroke="#22c55e" />
-              <text x="120" y="54" textAnchor="middle" fontSize="12">b = {inputs.b} {lenId}</text>
+              <text x="120" y="54" textAnchor="middle" fontSize="12">
+                b = {inputs.b} {lenId}
+              </text>
             </>
           )}
           {Number.isFinite(h) && (
             <>
               <line x1="40" y1="70" x2="40" y2="125" stroke="#ef4444" />
-              <text x="28" y="100" textAnchor="middle" fontSize="12">h = {inputs.h} {lenId}</text>
+              <text x="28" y="100" textAnchor="middle" fontSize="12">
+                h = {inputs.h} {lenId}
+              </text>
             </>
           )}
         </>
@@ -492,13 +488,17 @@ function FigurePreview2D({
           {Number.isFinite(a) && (
             <>
               <line x1="50" y1="80" x2="190" y2="80" stroke="#0ea5e9" />
-              <text x="120" y="72" textAnchor="middle" fontSize="12">a = {inputs.a} {lenId}</text>
+              <text x="120" y="72" textAnchor="middle" fontSize="12">
+                a = {inputs.a} {lenId}
+              </text>
             </>
           )}
           {Number.isFinite(b) && (
             <>
               <line x1="120" y1="40" x2="120" y2="120" stroke="#ef4444" />
-              <text x="132" y="84" fontSize="12">b = {inputs.b} {lenId}</text>
+              <text x="132" y="84" fontSize="12">
+                b = {inputs.b} {lenId}
+              </text>
             </>
           )}
         </>
@@ -534,7 +534,9 @@ function FigurePreview3D({
           {Number.isFinite(a) && (
             <>
               <line x1="60" y1="135" x2="150" y2="135" stroke="#0ea5e9" />
-              <text x="105" y="152" textAnchor="middle" fontSize="12">a = {inputs.a} {lenId}</text>
+              <text x="105" y="152" textAnchor="middle" fontSize="12">
+                a = {inputs.a} {lenId}
+              </text>
             </>
           )}
         </>
@@ -548,13 +550,17 @@ function FigurePreview3D({
           {Number.isFinite(r) && (
             <>
               <line x1="120" y1="120" x2="175" y2="120" stroke="#0ea5e9" />
-              <text x="148" y="112" textAnchor="middle" fontSize="12">r = {inputs.r} {lenId}</text>
+              <text x="148" y="112" textAnchor="middle" fontSize="12">
+                r = {inputs.r} {lenId}
+              </text>
             </>
           )}
           {Number.isFinite(h) && (
             <>
               <line x1="60" y1="40" x2="60" y2="120" stroke="#ef4444" />
-              <text x="48" y="82" textAnchor="middle" fontSize="12">h = {inputs.h} {lenId}</text>
+              <text x="48" y="82" textAnchor="middle" fontSize="12">
+                h = {inputs.h} {lenId}
+              </text>
             </>
           )}
         </>
@@ -566,7 +572,9 @@ function FigurePreview3D({
           {Number.isFinite(r) && (
             <>
               <line x1="120" y1="85" x2="180" y2="85" stroke="#0ea5e9" />
-              <text x="150" y="77" textAnchor="middle" fontSize="12">r = {inputs.r} {lenId}</text>
+              <text x="150" y="77" textAnchor="middle" fontSize="12">
+                r = {inputs.r} {lenId}
+              </text>
             </>
           )}
         </>
@@ -580,13 +588,17 @@ function FigurePreview3D({
           {Number.isFinite(r) && (
             <>
               <line x1="120" y1="120" x2="175" y2="120" stroke="#0ea5e9" />
-              <text x="148" y="112" textAnchor="middle" fontSize="12">r = {inputs.r} {lenId}</text>
+              <text x="148" y="112" textAnchor="middle" fontSize="12">
+                r = {inputs.r} {lenId}
+              </text>
             </>
           )}
           {Number.isFinite(h) && (
             <>
               <line x1="60" y1="120" x2="60" y2="30" stroke="#ef4444" />
-              <text x="48" y="78" textAnchor="middle" fontSize="12">h = {inputs.h} {lenId}</text>
+              <text x="48" y="78" textAnchor="middle" fontSize="12">
+                h = {inputs.h} {lenId}
+              </text>
             </>
           )}
         </>
@@ -601,7 +613,9 @@ function FigurePreview3D({
           <line x1="160" y1="130" x2="200" y2="115" stroke="#6366f1" />
           {(Number.isFinite(a) || Number.isFinite(b) || Number.isFinite(c)) && (
             <text x="130" y="155" textAnchor="middle" fontSize="12">
-              {Number.isFinite(a) ? `a=${inputs.a} ` : ""}{Number.isFinite(b) ? `b=${inputs.b} ` : ""}{Number.isFinite(c) ? `c=${inputs.c}` : ""}
+              {Number.isFinite(a) ? `a=${inputs.a} ` : ""}
+              {Number.isFinite(b) ? `b=${inputs.b} ` : ""}
+              {Number.isFinite(c) ? `c=${inputs.c}` : ""}
               {` ${lenId}`}
             </text>
           )}
