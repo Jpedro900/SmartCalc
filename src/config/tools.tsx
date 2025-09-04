@@ -34,6 +34,9 @@ export const TOOLS: Tool[] = [
   { href: "/calculators/unidades",   title: "Conversor de Unidades",desc: "Tempo, peso e distância.",             category: "Utilidades",  icon: IconTools },
   { href: "/calculators/area-volume",title: "Área & Volume",     desc: "Figuras básicas e sólidos.",              category: "Utilidades",  icon: IconTools },
   { href: "/calculators/idade",      title: "Idade",             desc: "Anos, meses e dias.",                     category: "Utilidades",  icon: IconTools },
+  { href: "/calculators/juros-simples", title: "Juros Simples", desc: "Montante, juros totais e gráfico linear.", category: "Financeiro", icon: IconMoney, badge: "Novo" },
+  { href: "/calculators/dividir-conta", title: "Dividir Conta", desc: "Valor por pessoa com gorjeta e arredondamento.", category: "Utilidades", icon: IconTools, badge: "Novo" },
+
 ];
 
 export const CATEGORIES = ["Todas", ...Array.from(new Set(TOOLS.map(t => t.category)))];
