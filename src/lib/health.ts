@@ -66,3 +66,7 @@ export function bodyFatClass(sex: Sex, idade: number, bfPct: number) {
   const ref = sex === "M" ? mapM : mapF;
   return ref.find((r) => bfPct <= r.max)?.label ?? "—";
 }
+
+export function tdeeCalc(tmb: number, fator: number): number {
+  return tmb * fator;
+}
