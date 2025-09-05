@@ -1,14 +1,11 @@
 import PetIdadeClient from "./PetIdadeClient";
 
 export const metadata = {
-  title: "Idade do pet (cão/gato) — SmartCalc",
-  description: "Converta a idade do seu pet para anos humanos, considerando porte.",
+  title: "Idade do Pet — Cão e Gato",
+  description:
+    "Descubra a idade humana do seu pet com base na espécie e no porte, além de fase da vida, curiosidades e dicas rápidas.",
 };
 
 export default function Page() {
-  return (
-    <main className="mx-auto max-w-6xl px-4 py-6">
-      <PetIdadeClient />
-    </main>
-  );
+  return <PetIdadeClient />;
 }
