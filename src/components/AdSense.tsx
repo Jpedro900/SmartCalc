@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import Script from "next/script";
 
 type AdSenseProps = {
@@ -23,7 +23,6 @@ export default function AdSense({
   height = 90,
 }: AdSenseProps) {
   const isProd = process.env.NODE_ENV === "production";
-  const [loaded, setLoaded] = useState(false);
   const pushedRef = useRef(false);
 
   const envOk = useMemo(
@@ -91,7 +90,6 @@ export default function AdSense({
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-${publisherId}`}
           crossOrigin="anonymous"
           onLoad={() => {
-            setLoaded(true);
             if (!pushedRef.current) {
               try {
                 (window.adsbygoogle = window.adsbygoogle || []).push({});
