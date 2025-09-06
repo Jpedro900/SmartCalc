@@ -2,7 +2,7 @@ import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import Script from "next/script"; // ⬅️ importa para injetar o AdSense no <head>
+import Script from "next/script";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://smartcalc.com.br"),
@@ -61,13 +61,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR">
       <head>
-        {/* AdSense Auto ads: carrega uma vez para o site inteiro */}
+        {/* AdSense Auto Ads – SSR no <head> */}
         <Script
-          id="adsbygoogle-auto"
+          id="adsense-auto-ads"
           async
-          strategy="afterInteractive"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1748598951281357"
           crossOrigin="anonymous"
+          strategy="beforeInteractive"
         />
       </head>
       <body className="flex min-h-screen flex-col bg-slate-50 text-slate-900 antialiased">
