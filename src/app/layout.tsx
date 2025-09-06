@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import Script from "next/script"; // ⬅️ importa para injetar o AdSense no <head>
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://smartcalc.com.br"),
@@ -37,13 +38,11 @@ export const metadata: Metadata = {
     images: ["/og.png"],
   },
   icons: {
-    // favicons modernos
     icon: [
       { url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
       { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
       { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
       { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
-      // opcional: deixe o .ico se quiser compat extra
       { url: "/favicon.ico" },
     ],
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
@@ -61,6 +60,16 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR">
+      <head>
+        {/* AdSense Auto ads: carrega uma vez para o site inteiro */}
+        <Script
+          id="adsbygoogle-auto"
+          async
+          strategy="afterInteractive"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1748598951281357"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className="flex min-h-screen flex-col bg-slate-50 text-slate-900 antialiased">
         <Navbar />
         <main className="flex-1">{children}</main>
